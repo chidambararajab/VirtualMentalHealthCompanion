@@ -4,6 +4,7 @@ import {
   Animated,
   Dimensions,
   Image,
+  ImageBackground,
   Platform,
   ScrollView,
   StyleSheet,
@@ -140,149 +141,180 @@ const MentalHealth = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <Image
-          source={require('./assets/images/mentalhealth.gif')}
-          style={styles.image}
-        />
-      </View>
-      <Text style={[styles.title]}>
-        {!recommendations
-          ? 'Virtual Mental Health Companion'
-          : 'Your Virtual Mental Health Result'}
-      </Text>
+    <ImageBackground
+      source={require('./assets/images/01.gif')}
+      style={styles.backgroundImage}
+      resizeMode="cover">
+      <LinearGradient
+        colors={['rgba(0, 0, 0, 0.5)', 'rgba(0, 0, 0, 0.7)']}
+        style={styles.overlay}
+      />
+      <ScrollView contentContainerStyle={styles.container}>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Image
+            source={
+              !recommendations
+                ? require('./assets/images/mentalhealth.gif')
+                : require('./assets/images/mrbean.gif')
+            }
+            style={[styles.image, {width: !recommendations ? 200 : 350}]}
+          />
+        </View>
+        <Text style={[styles.title]}>
+          {!recommendations
+            ? 'Virtual Mental Health Companion'
+            : 'Your Virtual Mental Health Result'}
+        </Text>
 
-      {/* Display validation error if any */}
-      {error ? <Text style={styles.errorText}>{error}</Text> : null}
+        {/* Display validation error if any */}
+        {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
-      {!recommendations ? (
-        <>
-          <View style={styles.formGroup}>
-            <Text style={styles.topText}>Enter your name:</Text>
-            <TextInput
-              style={[styles.input, {borderColor: getBorderColor()}]}
-              value={username}
-              onChangeText={setUsername}
-              placeholder="Your name"
-            />
-          </View>
-
-          <View style={styles.formGroup}>
-            <Text style={styles.topText}>Enter your age:</Text>
-            <TextInput
-              style={[styles.input, {borderColor: getBorderColor()}]}
-              value={age}
-              onChangeText={setAge}
-              placeholder="Your age"
-              keyboardType="numeric"
-            />
-          </View>
-
-          <View style={styles.formGroup}>
-            <Text style={styles.topText}>How do you feel today?</Text>
-            <View
-              style={[styles.pickerContainer, {borderColor: getBorderColor()}]}>
-              <Picker
-                selectedValue={mood}
-                onValueChange={itemValue => setMood(itemValue)}
-                style={styles.inputPicker}>
-                <Picker.Item label="Select your mood" value="" />
-                <Picker.Item label="Happy" value="happy" />
-                <Picker.Item label="Sad" value="sad" />
-                <Picker.Item label="Anxious" value="anxious" />
-                <Picker.Item label="Excited" value="excited" />
-                <Picker.Item label="Angry" value="angry" />
-              </Picker>
+        {!recommendations ? (
+          <>
+            <View style={styles.formGroup}>
+              <Text style={styles.topText}>Enter your name:</Text>
+              <TextInput
+                style={[styles.input, {borderColor: getBorderColor()}]}
+                value={username}
+                onChangeText={setUsername}
+                placeholder="Your name"
+              />
             </View>
-          </View>
 
-          <View style={styles.formGroup}>
-            <Text style={styles.topText}>Rate your stress level (1-10):</Text>
-            <TextInput
-              style={[styles.input, {borderColor: getBorderColor()}]}
-              value={stressLevel}
-              onChangeText={setStressLevel}
-              placeholder="Stress Level"
-              keyboardType="numeric"
-              maxLength={2}
-            />
-          </View>
-
-          <View style={styles.formGroup}>
-            <Text style={styles.topText}>Select your diet goal:</Text>
-            <View
-              style={[styles.pickerContainer, {borderColor: getBorderColor()}]}>
-              <Picker
-                selectedValue={dietGoals}
-                onValueChange={itemValue => setDietGoals(itemValue)}
-                style={styles.inputPicker}>
-                <Picker.Item label="Select your goal" value="" />
-                <Picker.Item label="Weight Loss" value="weight_loss" />
-                <Picker.Item label="Muscle Gain" value="muscle_gain" />
-                <Picker.Item label="Maintain Health" value="maintain_health" />
-              </Picker>
+            <View style={styles.formGroup}>
+              <Text style={styles.topText}>Enter your age:</Text>
+              <TextInput
+                style={[styles.input, {borderColor: getBorderColor()}]}
+                value={age}
+                onChangeText={setAge}
+                placeholder="Your age"
+                keyboardType="numeric"
+              />
             </View>
-          </View>
 
-          {/* Gradient Button for Get Recommendations */}
-          <TouchableOpacity
-            onPress={handleSubmit}
-            style={styles.buttonContainer}>
-            <LinearGradient
-              colors={['#4caf50', '#2e7d32']}
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 1}}
-              style={styles.gradientButton}>
-              <Text style={styles.buttonText}>Get Recommendations</Text>
-            </LinearGradient>
-          </TouchableOpacity>
-        </>
-      ) : (
-        <>
-          <Animated.View
-            style={[
-              styles.output,
-              {opacity: fadeAnim, borderColor: getBorderColor()},
-            ]}>
-            <Text style={styles.recommendationText}>{recommendations}</Text>
-          </Animated.View>
-          {/* Reset Button */}
-          <TouchableOpacity
-            onPress={handleReset}
-            style={styles.resetButtonContainer}>
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingTop: 10,
-                marginTop: 10,
-              }}>
+            <View style={styles.formGroup}>
+              <Text style={styles.topText}>How do you feel today?</Text>
+              <View
+                style={[
+                  styles.pickerContainer,
+                  {borderColor: getBorderColor()},
+                ]}>
+                <Picker
+                  selectedValue={mood}
+                  onValueChange={itemValue => setMood(itemValue)}
+                  style={styles.inputPicker}>
+                  <Picker.Item label="Select your mood" value="" />
+                  <Picker.Item label="Happy" value="happy" />
+                  <Picker.Item label="Sad" value="sad" />
+                  <Picker.Item label="Anxious" value="anxious" />
+                  <Picker.Item label="Excited" value="excited" />
+                  <Picker.Item label="Angry" value="angry" />
+                </Picker>
+              </View>
+            </View>
+
+            <View style={styles.formGroup}>
+              <Text style={styles.topText}>Rate your stress level (1-10):</Text>
+              <TextInput
+                style={[styles.input, {borderColor: getBorderColor()}]}
+                value={stressLevel}
+                onChangeText={setStressLevel}
+                placeholder="Stress Level"
+                keyboardType="numeric"
+                maxLength={2}
+              />
+            </View>
+
+            <View style={styles.formGroup}>
+              <Text style={styles.topText}>Select your diet goal:</Text>
+              <View
+                style={[
+                  styles.pickerContainer,
+                  {borderColor: getBorderColor()},
+                ]}>
+                <Picker
+                  selectedValue={dietGoals}
+                  onValueChange={itemValue => setDietGoals(itemValue)}
+                  style={styles.inputPicker}>
+                  <Picker.Item label="Select your goal" value="" />
+                  <Picker.Item label="Weight Loss" value="weight_loss" />
+                  <Picker.Item label="Muscle Gain" value="muscle_gain" />
+                  <Picker.Item
+                    label="Maintain Health"
+                    value="maintain_health"
+                  />
+                </Picker>
+              </View>
+            </View>
+
+            {/* Gradient Button for Get Recommendations */}
+            <TouchableOpacity
+              onPress={handleSubmit}
+              style={styles.buttonContainer}>
               <LinearGradient
-                colors={['#366FF4FF', '#2872C6FF']}
+                colors={['#4caf50', '#2e7d32']}
                 start={{x: 0, y: 0}}
                 end={{x: 1, y: 1}}
-                style={[styles.gradientButton]}>
-                <Text style={styles.buttonText}>Reset</Text>
+                style={styles.gradientButton}>
+                <Text style={styles.buttonText}>Get Recommendations</Text>
               </LinearGradient>
-            </View>
-          </TouchableOpacity>
-        </>
-      )}
-    </ScrollView>
+            </TouchableOpacity>
+          </>
+        ) : (
+          <>
+            <Animated.View
+              style={[
+                styles.output,
+                {opacity: fadeAnim, borderColor: getBorderColor()},
+              ]}>
+              <Text style={styles.recommendationText}>{recommendations}</Text>
+            </Animated.View>
+            {/* Reset Button */}
+            <TouchableOpacity
+              onPress={handleReset}
+              style={styles.resetButtonContainer}>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  paddingTop: 10,
+                  marginTop: 10,
+                }}>
+                <LinearGradient
+                  colors={['#366FF4FF', '#2872C6FF']}
+                  start={{x: 0, y: 0}}
+                  end={{x: 1, y: 1}}
+                  style={[styles.gradientButton]}>
+                  <Text style={styles.buttonText}>Reset</Text>
+                </LinearGradient>
+              </View>
+            </TouchableOpacity>
+          </>
+        )}
+      </ScrollView>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: deviceWidth,
+    // height: deviceHeight,
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    zIndex: -1,
+  },
   container: {
     padding: 20,
     flexGrow: 1,
     justifyContent: 'center',
-    backgroundColor: '#e8f5e9',
+    backgroundColor: '#FFFFFFBB',
     width: deviceWidth,
     minHeight: deviceHeight,
   },
@@ -315,7 +347,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   output: {
-    backgroundColor: '#f1f1f1',
+    backgroundColor: '#F1F1F1E4',
     padding: 15,
     marginTop: 20,
     borderRadius: 20,
@@ -364,6 +396,20 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 10,
     marginBottom: 20,
+    opacity: 0.8,
+    marginTop: 20,
+  },
+  errorText: {
+    color: '#F46262B8', // Red color for error messages
+    textAlign: 'center',
+    fontFamily: 'Poppins-Regular', // Apply Poppins font
+    marginBottom: 20,
+    paddingVertical: 5,
+    backgroundColor: '#F5E4E493',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    fontWeight: '900',
   },
 });
 

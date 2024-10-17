@@ -18,9 +18,17 @@ import MentalHealth from './MentalHealth';
 function App() {
   return (
     <SafeAreaView>
-      <StatusBar barStyle={'light-content'} />
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+        barStyle="dark-content" // or 'dark-content' depending on your preference
+      />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <View style={{justifyContent: 'center', alignItems: 'center'}}>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
           <MentalHealth />
         </View>
       </ScrollView>
