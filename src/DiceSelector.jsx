@@ -5,7 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 const DiceSelector = ({setNumOfDice}) => {
   return (
     <View style={styles.buttonContainer}>
-      <TouchableOpacity onPress={() => setNumOfDice(1)}>
+      <TouchableOpacity onPress={() => setNumOfDice(1)} activeOpacity={0.9}>
         <LinearGradient
           colors={['#56CCF2', '#2F80ED']}
           start={{x: 0, y: 0}}
@@ -15,7 +15,7 @@ const DiceSelector = ({setNumOfDice}) => {
         </LinearGradient>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => setNumOfDice(2)}>
+      <TouchableOpacity onPress={() => setNumOfDice(2)} activeOpacity={0.9}>
         <LinearGradient
           colors={['#56CCF2', '#2F80ED']}
           start={{x: 0, y: 0}}

@@ -154,12 +154,36 @@ const DiceApp = () => {
   });
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={rollDice}
+      activeOpacity={1}>
       {/* Dice Selector Component */}
       <DiceSelector setNumOfDice={setNumOfDice} />
 
       {/* First Dice */}
-      <TouchableOpacity onPress={rollDice} activeOpacity={0.8}>
+      <Animated.View
+        style={[
+          styles.diceContainer,
+          {
+            transform: [
+              {rotateX: rotateX},
+              {rotateY: rotateY},
+              {rotateZ: rotateZ},
+              {perspective: 1000}, // 3D perspective effect
+            ],
+          },
+        ]}>
+        {/* Show dots while rolling and number after the roll */}
+        {!isRolling ? (
+          renderDots(diceNumber1)
+        ) : (
+          <Text style={[styles.diceText, {opacity: 0.3}]}>{'🏀'}</Text>
+        )}
+      </Animated.View>
+
+      {/* Render second dice only if 2 dice are selected */}
+      {numOfDice === 2 && (
         <Animated.View
           style={[
             styles.diceContainer,
@@ -174,40 +198,15 @@ const DiceApp = () => {
           ]}>
           {/* Show dots while rolling and number after the roll */}
           {!isRolling ? (
-            renderDots(diceNumber1)
+            renderDots(diceNumber2)
           ) : (
             <Text style={[styles.diceText, {opacity: 0.3}]}>{'🏀'}</Text>
           )}
         </Animated.View>
-      </TouchableOpacity>
-
-      {/* Render second dice only if 2 dice are selected */}
-      {numOfDice === 2 && (
-        <TouchableOpacity onPress={rollDice} activeOpacity={0.8}>
-          <Animated.View
-            style={[
-              styles.diceContainer,
-              {
-                transform: [
-                  {rotateX: rotateX},
-                  {rotateY: rotateY},
-                  {rotateZ: rotateZ},
-                  {perspective: 1000}, // 3D perspective effect
-                ],
-              },
-            ]}>
-            {/* Show dots while rolling and number after the roll */}
-            {!isRolling ? (
-              renderDots(diceNumber2)
-            ) : (
-              <Text style={[styles.diceText, {opacity: 0.3}]}>{'🏀'}</Text>
-            )}
-          </Animated.View>
-        </TouchableOpacity>
       )}
 
-      <Text style={styles.text}>Tap the dice to roll!</Text>
-    </View>
+      <Text style={styles.text}>Tap anywhere to roll!</Text>
+    </TouchableOpacity>
   );
 };
 
