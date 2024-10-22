@@ -1,57 +1,50 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
 import {
+  Dimensions,
   SafeAreaView,
-  ScrollView,
   StatusBar,
   StyleSheet,
   View,
 } from 'react-native';
-import MentalHealth from './MentalHealth';
+import LinearGradient from 'react-native-linear-gradient'; // Import LinearGradient
+import DiceApp from './Dice';
+
+const {height} = Dimensions.get('window'); // Get screen height for responsive design
 
 function App() {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{flex: 1}}>
       <StatusBar
         translucent
         backgroundColor="transparent"
-        barStyle="dark-content" // or 'dark-content' depending on your preference
+        barStyle="light-content" // Use 'light-content' for better contrast on gradient background
       />
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <MentalHealth />
+
+      {/* Apply gradient background */}
+      <LinearGradient
+        colors={['#a8edea', '#fed6e3']} // Soft gradient colors
+        style={styles.gradient}>
+        {/* Center content vertically and horizontally */}
+        <View style={styles.container}>
+          <DiceApp />
         </View>
-      </ScrollView>
+      </LinearGradient>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  gradient: {
+    flex: 1,
+    height: height,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%', // Ensure the width takes full space
   },
 });
 
